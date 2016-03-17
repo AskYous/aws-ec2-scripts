@@ -6,6 +6,8 @@ yum install -y ruby
 yum install -y aws-cli
 yum install -y php54
 yum install -y mysql55-server
+yum install -y git
+yum install -y php54-pgsql
 
 # Install Amazon Code Deploy
 cd /home/ec2-user
@@ -21,6 +23,16 @@ echo "<?php echo 'I am alive.' ?>" > heartbeat.php
 # Turn on Apache
 service httpd start
 chkconfig httpd on
+
+# Install Moodle
+cd /var/www/html/
+mkdir moodle
+git clone --depth=1 -b MOODLE_30_STABLE git://git.moodle.org/moodle.git
+chown -R root moodle/
+chmod -R 0755 /path/to/moodle
+sudo find moodle -type f -exec chmod 0644 {} \;
+mkdir /var/www/moodledata
+sudo chmod 0777 /var/www/moodledata/
 
 # Tests:
 
